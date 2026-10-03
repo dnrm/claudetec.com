@@ -63,8 +63,8 @@ function FooterLinks({
 export default function Home() {
   return (
     <>
-      <header className="sticky top-0 border-b border-foreground/15 bg-background/90 backdrop-blur">
-        <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-2 font-sans text-sm font-medium md:py-3">
+      <header className="sticky top-0 z-10 border-b border-foreground/10 bg-background">
+        <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-2 font-sans text-[15px] font-medium md:py-3">
           <a href="#" aria-label="ClaudeTec">
             {/* eslint-disable-next-line @next/next/no-img-element -- SVG logo, no optimization needed */}
             <img
@@ -74,16 +74,28 @@ export default function Home() {
               height={21}
             />
           </a>
-          <div className="hidden gap-2 md:flex">
+          <div className="hidden items-center gap-1 md:flex">
             {sections.map((s) => (
               <a
                 key={s.id}
                 href={`#${s.id}`}
-                className="px-2 py-2 underline-offset-4 hover:text-accent-ink hover:underline"
+                className="rounded-lg px-3 py-2 hover:bg-foreground/5"
               >
                 {s.title}
               </a>
             ))}
+            <a
+              href="https://www.instagram.com/claude.tec"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-3 rounded-lg bg-foreground px-4 py-2.5 text-background transition-colors hover:bg-accent hover:text-foreground"
+            >
+              Síguenos
+              <span className="sr-only">
+                {" "}
+                en Instagram (se abre en otra pestaña)
+              </span>
+            </a>
           </div>
           <MobileMenu
             links={sections.map((s) => ({ label: s.title, href: `#${s.id}` }))}
