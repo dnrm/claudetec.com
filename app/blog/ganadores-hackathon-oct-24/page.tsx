@@ -1,9 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { openGraph } from "../../seo";
+
+const description = "Primer, segundo y tercer lugar del Hackathon Claude de ClaudeTec.";
 
 export const metadata: Metadata = {
-  title: "Ganadores del Hackathon Claude · ClaudeTec",
-  description: "Primer, segundo y tercer lugar del Hackathon Claude de ClaudeTec.",
+  title: "Ganadores del Hackathon Claude",
+  description,
+  alternates: { canonical: "/blog/ganadores-hackathon-oct-24" },
+  openGraph: {
+    ...openGraph,
+    type: "article",
+    title: "Ganadores del Hackathon Claude",
+    description,
+    url: "/blog/ganadores-hackathon-oct-24",
+  },
 };
 
 // Placeholder copy until results are confirmed. To add a photo, set `image`

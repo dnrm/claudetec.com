@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { openGraph } from "../../seo";
 import { getMember, getMembers, study } from "../members";
 
 export const dynamicParams = false;
@@ -17,9 +18,20 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const m = getMember((await params).slug);
   if (!m) return {};
+  const title = `${m.name}, ${m.role}`;
+  const url = `/mesa/${m.slug}`;
   return {
-    title: `${m.name} · ${m.role} · ClaudeTec`,
+    title,
     description: m.bio[0],
+    alternates: { canonical: url },
+    openGraph: {
+      ...openGraph,
+      type: "profile",
+      title,
+      description: m.bio[0],
+      url,
+      ...(m.image && { images: [{ url: m.image, alt: m.name }] }),
+    },
   };
 }
 

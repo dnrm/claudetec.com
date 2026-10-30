@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { openGraph, SITE_URL } from "./seo";
 import { Footer, Header } from "./site";
 
 const lora = Lora({
@@ -15,9 +16,36 @@ const cabinet = localFont({
   weight: "100 800",
 });
 
+const description =
+  "ClaudeTec es un grupo estudiantil independiente del Tec de Monterrey, campus Monterrey, que explora y aprende inteligencia artificial con Claude. Eventos, talleres y el Hackathon Claude.";
+
 export const metadata: Metadata = {
-  title: "ClaudeTec",
-  description: "Grupo estudiantil de IA del Tecnológico de Monterrey, campus Monterrey.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "ClaudeTec · Grupo estudiantil de IA del Tec de Monterrey",
+    template: "%s · ClaudeTec",
+  },
+  description,
+  applicationName: "ClaudeTec",
+  keywords: [
+    "ClaudeTec",
+    "Claude",
+    "inteligencia artificial",
+    "IA",
+    "grupo estudiantil",
+    "Tec de Monterrey",
+    "Monterrey",
+    "Hackathon Claude",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    ...openGraph,
+    title: "ClaudeTec · Grupo estudiantil de IA del Tec de Monterrey",
+    description,
+    url: "/",
+  },
+  twitter: { card: "summary_large_image" },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
