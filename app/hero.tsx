@@ -73,12 +73,9 @@ export default function Hero() {
               href="https://chat.whatsapp.com/GGU9hBPTmjWFPSA6fvAyqD?s=cl&p=i&mlu=4&ilr=4&iam=2"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-7 py-4 font-sans text-lg font-medium text-background shadow-[0_8px_24px_-8px_rgb(21_21_20/0.5)] transition-colors hover:bg-accent hover:text-foreground sm:w-auto"
+              className="group inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-4 font-sans text-lg font-medium text-background shadow-[0_8px_24px_-8px_rgb(21_21_20/0.5)] transition-colors hover:bg-accent hover:text-foreground"
             >
               Únete a la comunidad
-              <span aria-hidden="true" className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                ↗
-              </span>
               <span className="sr-only"> en WhatsApp (se abre en otra pestaña)</span>
             </motion.a>
             {/* Secondary: a text link, so it never competes with the filled button */}
@@ -86,13 +83,10 @@ export default function Hero() {
               href="https://www.instagram.com/claude.tec"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-1.5 self-center py-3 font-sans font-medium text-foreground/80 transition-colors hover:text-foreground sm:self-auto"
+              className="group inline-flex items-center gap-1.5 py-3 font-sans font-medium text-foreground/80 transition-colors hover:text-foreground"
             >
               <span className="underline decoration-foreground/30 underline-offset-[6px] transition-colors group-hover:decoration-foreground">
                 Síguenos en Instagram
-              </span>
-              <span aria-hidden="true" className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                ↗
               </span>
               <span className="sr-only"> (se abre en otra pestaña)</span>
             </a>

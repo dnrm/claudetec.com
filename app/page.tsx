@@ -55,9 +55,6 @@ export default function Home() {
             className="group mt-8 inline-flex shrink-0 items-center gap-2 rounded-full bg-background px-5 py-3 font-sans font-medium text-foreground transition-colors hover:bg-accent md:mt-0"
           >
             Escríbenos en Instagram
-            <span aria-hidden="true" className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-              ↗
-            </span>
             <span className="sr-only"> (se abre en otra pestaña)</span>
           </a>
         </section>
