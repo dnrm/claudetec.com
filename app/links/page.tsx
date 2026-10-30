@@ -4,7 +4,7 @@ import ScrambleText from "../scramble-text";
 import { openGraph } from "../seo";
 import { sections, socials, type Card } from "./links";
 
-const description = "Talleres, redes y todo lo de ClaudeTec en un solo lugar.";
+const description = "Redes, videos y todo lo de ClaudeTec en un solo lugar.";
 
 export const metadata: Metadata = {
   title: "Links",
@@ -20,11 +20,11 @@ const external = (href: string) =>
 const rise = (n: number) => ({ animationDelay: `${n * 70}ms` });
 
 function LinkCard({ card, i }: { card: Card; i: number }) {
+  const Tag = card.href ? "a" : "div";
   return (
-    <a
-      href={card.href}
-      {...external(card.href)}
-      className="group flex w-[82%] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-card transition-transform hover:-translate-y-1 sm:w-[46%]"
+    <Tag
+      {...(card.href && { href: card.href, ...external(card.href) })}
+      className={`group flex w-[82%] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-card sm:w-[46%] ${card.href ? "transition-transform hover:-translate-y-1" : ""}`}
     >
       {card.image ? (
         <Image src={card.image} alt="" width={800} height={533} sizes="(min-width: 640px) 220px, 80vw" className="aspect-[3/2] w-full object-cover" />
@@ -49,12 +49,14 @@ function LinkCard({ card, i }: { card: Card; i: number }) {
         )}
         <h3 className="mt-1 text-xl leading-snug">{card.title}</h3>
         {card.description && <p className="mt-2 text-sm text-foreground/75">{card.description}</p>}
-        <p className="mt-auto pt-4 font-mono text-sm text-accent-ink">
-          <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
-        </p>
+        {card.href && (
+          <p className="mt-auto pt-4 font-mono text-sm text-accent-ink">
+            <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+          </p>
+        )}
       </div>
-      {/^https?:/.test(card.href) && <span className="sr-only"> (se abre en otra pestaña)</span>}
-    </a>
+      {card.href && /^https?:/.test(card.href) && <span className="sr-only"> (se abre en otra pestaña)</span>}
+    </Tag>
   );
 }
 
@@ -100,12 +102,23 @@ export default function Page() {
               <img src={`/clawd/${sec.clawd}/clawd-${sec.clawd}.webp`} alt="" aria-hidden="true" width={56} height={50} loading="lazy" className="ml-auto shrink-0" />
             )}
           </div>
+          {sec.video && (
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${sec.video}`}
+              title={sec.title}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              style={rise(5 + n * 2)}
+              className="links-rise mt-5 aspect-video w-full rounded-2xl"
+            />
+          )}
           {/* Swipeable row on mobile, bleeds to the screen edge */}
-          <div style={rise(5 + n * 2)} className="links-rise -mx-6 mt-5 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2">
+          {sec.cards.length > 0 && <div style={rise(5 + n * 2)} className="links-rise -mx-6 mt-5 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2">
             {sec.cards.map((c, i) => (
               <LinkCard key={c.title} card={c} i={i} />
             ))}
-          </div>
+          </div>}
         </section>
       ))}
 
