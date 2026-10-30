@@ -53,7 +53,7 @@ export default function MobileMenu({ links }: { links: Link[] }) {
         id="mobile-menu"
         inert={!open}
         data-open={open || undefined}
-        className="group/menu absolute inset-x-0 top-full grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out data-[open]:grid-rows-[1fr] motion-reduce:transition-none"
+        className="group/menu absolute inset-x-0 top-full grid grid-rows-[0fr] transition-[grid-template-rows,box-shadow] duration-300 ease-out data-[open]:grid-rows-[1fr] data-[open]:shadow-[0_12px_24px_-12px_rgb(21_21_20/0.35)] motion-reduce:transition-none"
       >
         <div className="overflow-hidden">
           <ul className="border-b border-foreground/15 bg-background px-6 pt-3 pb-3 font-sans font-medium">

@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...pages.map((p) => `/${p.slug}`),
     "/mesa",
     "/blog",
+    "/links",
     ...posts.map((p) => `/blog/${p.slug}`),
     ...getMembers().map((m) => `/mesa/${m.slug}`),
   ].map(

@@ -44,6 +44,31 @@ body {
   .ascii-march {
     animation: ascii-march 0.8s steps(2) infinite;
   }
+
+  /* /links: staggered entrance and the strolling Clawd */
+  .links-rise {
+    animation: links-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .links-walk {
+    animation: links-walk 14s linear infinite;
+  }
+}
+
+@keyframes links-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+}
+
+@keyframes links-walk {
+  from {
+    transform: translateX(-48px);
+  }
+  to {
+    transform: translateX(min(100vw, 36rem));
+  }
 }
 
 @keyframes ascii-march {
