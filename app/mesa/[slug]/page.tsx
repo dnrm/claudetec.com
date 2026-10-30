@@ -49,7 +49,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-6 pb-24">
       <article className="pt-12 md:pt-20">
-        <Link href="/#mesa" className="font-sans text-sm font-medium text-accent-ink underline-offset-4 hover:underline">
+        <Link href="/mesa" className="font-sans text-sm font-medium text-accent-ink underline-offset-4 hover:underline">
           ← Mesa directiva
         </Link>
         <div className="mt-8 grid gap-10 md:grid-cols-[5fr_7fr] md:gap-12">
