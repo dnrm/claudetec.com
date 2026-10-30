@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Footer, Header } from "./site";
 
 const lora = Lora({
   variable: "--font-lora",
@@ -25,7 +26,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es"
       className={`${lora.variable} ${cabinet.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

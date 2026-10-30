@@ -1,214 +1,192 @@
 import Image from "next/image";
-import MobileMenu from "./mobile-menu";
-import Spinner from "./spinner";
+import Hero from "./hero";
+import ScrambleText from "./scramble-text";
+import { sections } from "./site";
 
-// ponytail: single static page. Split into routes/components when content grows.
-// Unconfirmed copy (see PRODUCT.md): "Qué hacemos" activities and "todas las carreras".
-const sections = [
+const info = sections.filter((s) => s.id !== "join");
+const join = sections.find((s) => s.id === "join")!;
+
+type Social = { label: string; href: string };
+
+// Order and copy from public/mesa-directiva/ (Portada + "Qué hace en ClaudeTec" slides).
+// bio and socials are blank until each member sends theirs; the card hides what's empty.
+const board: {
+  name: string;
+  slug: string;
+  role: string;
+  study: string;
+  does: string;
+  bio?: string;
+  socials: Social[];
+}[] = [
   {
-    id: "about",
-    title: "Quiénes somos",
-    body: "Somos un grupo estudiantil independiente del Tec de Monterrey que explora y aprende IA con Claude.",
+    name: "Marcelo Treviño",
+    slug: "marcelo-trevino",
+    role: "Presidente",
+    study: "ITC · 5.º semestre",
+    does: "Lidera ClaudeTec este 2026–2027, con la meta de llevar la IA aplicada a todo el campus.",
+    socials: [],
   },
   {
-    id: "activities",
-    title: "Qué hacemos",
-    body: "Talleres, charlas y proyectos con Claude y herramientas de IA.",
+    name: "Ramses Domínguez",
+    slug: "ramses-dominguez",
+    role: "Vicepresidente",
+    study: "IID · 5.º semestre",
+    does: "Trabaja junto a presidencia para que ClaudeTec crezca y llegue a más estudiantes.",
+    socials: [],
   },
   {
-    id: "events",
-    title: "Próximos eventos",
-    body: "Hackathon Claude: 3 de octubre. Horario, lugar y próximos eventos, primero en nuestro Instagram, @claude.tec.",
+    name: "Renato Peña",
+    slug: "renato-pena",
+    role: "Director de Proyectos",
+    study: "ITC · 7.º semestre",
+    does: "Convierte las ideas del grupo en proyectos que sí se terminan.",
+    socials: [],
   },
   {
-    id: "join",
-    title: "Únete",
-    body: "Abierto a estudiantes de todas las carreras. Para unirte, escríbenos en Instagram: @claude.tec.",
+    name: "David Valdez",
+    slug: "david-valdez",
+    role: "Director de Finanzas",
+    study: "IBT · 5.º semestre",
+    does: "Lleva los números de ClaudeTec para que cada proyecto tenga con qué hacerse realidad.",
+    socials: [],
+  },
+  {
+    name: "Andrea Valdez",
+    slug: "andrea-valdez",
+    role: "Directora de Responsabilidad Social",
+    study: "ITC · 5.º semestre",
+    does: "Se asegura de que lo que hacemos con IA tenga impacto más allá del campus.",
+    socials: [],
+  },
+  {
+    name: "André Kuo Ko",
+    slug: "andre-kuo-ko",
+    role: "Director de Comunicación",
+    study: "IDM · 3.er semestre",
+    does: "Le da voz e imagen a ClaudeTec: lo que ves aquí pasa por sus manos.",
+    socials: [],
+  },
+  {
+    name: "Daniel Medina",
+    slug: "daniel-medina",
+    role: "Director de TI",
+    study: "ITC · 5.º semestre",
+    does: "Se encarga de que todo lo técnico funcione: plataformas, herramientas y la infraestructura de cada proyecto.",
+    socials: [],
   },
 ];
-
-function FooterLinks({
-  title,
-  links,
-}: {
-  title: string;
-  links: { label: string; href: string; external?: boolean }[];
-}) {
-  return (
-    <nav aria-label={title}>
-      <h3 className="text-base">{title}</h3>
-      <ul className="mt-2 text-sm">
-        {links.map((l) => (
-          <li key={l.href}>
-            <a
-              href={l.href}
-              className="inline-block py-3 underline-offset-4 hover:text-accent-ink hover:underline md:py-1.5"
-              {...(l.external && {
-                target: "_blank",
-                rel: "noopener noreferrer",
-              })}
-            >
-              {l.label}
-              {l.external && (
-                <span className="sr-only"> (se abre en otra pestaña)</span>
-              )}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
-}
 
 export default function Home() {
   return (
     <>
-      <header className="sticky top-0 z-10 border-b border-foreground/10 bg-background">
-        <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-2 font-sans text-[15px] font-medium md:py-3">
-          <a href="#" aria-label="ClaudeTec">
-            {/* eslint-disable-next-line @next/next/no-img-element -- SVG logo, no optimization needed */}
-            <img
-              src="/brand/logo/claudetec/claudetec-fondo-claro.svg"
-              alt="ClaudeTec"
-              width={140}
-              height={21}
-            />
-          </a>
-          <div className="hidden items-center gap-1 md:flex">
-            {sections.map((s) => (
-              <a
-                key={s.id}
-                href={`#${s.id}`}
-                className="rounded-lg px-3 py-2 hover:bg-foreground/5"
-              >
-                {s.title}
-              </a>
-            ))}
-            <a
-              href="https://www.instagram.com/claude.tec"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-3 rounded-lg bg-foreground px-4 py-2.5 text-background transition-colors hover:bg-accent hover:text-foreground"
-            >
-              Síguenos
-              <span className="sr-only">
-                {" "}
-                en Instagram (se abre en otra pestaña)
-              </span>
-            </a>
-          </div>
-          <MobileMenu
-            links={sections.map((s) => ({ label: s.title, href: `#${s.id}` }))}
-          />
-        </nav>
-      </header>
+      <Hero />
 
-      <main className="mx-auto w-full max-w-5xl flex-1 px-6">
-        <section className="grid items-center gap-10 py-12 md:grid-cols-2 md:py-24">
-          <div>
-            <h1>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/brand/logo/claudetec/claudetec-fondo-claro.svg"
-                alt="ClaudeTec"
-                width={480}
-                height={72}
-                className="h-auto w-full max-w-md"
-              />
-            </h1>
-            <p className="mt-4 text-balance text-lg text-foreground/70">
-              Comunidad estudiantil de IA · Tec de Monterrey, campus Monterrey
-            </p>
-            <a
-              href="https://www.instagram.com/claude.tec"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-8 inline-block rounded-full bg-foreground px-5 font-sans font-medium py-3 text-background transition-colors hover:bg-accent hover:text-foreground"
+      <main className="mx-auto w-full max-w-5xl flex-1 px-6 pt-16 md:pt-24">
+        {/* Numbered rows: index + title left, body right; "Únete" closes as the call to action. */}
+        <div className="border-b border-foreground/15">
+          {info.map((s, i) => (
+            <section
+              key={s.id}
+              id={s.id}
+              className="grid scroll-mt-20 gap-3 border-t border-foreground/15 py-10 md:grid-cols-[5fr_7fr] md:gap-12 md:py-14"
             >
-              Síguenos en Instagram
-              <span className="sr-only"> (se abre en otra pestaña)</span>
-            </a>
+              <div>
+                <p className="font-mono text-sm text-accent-ink">
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+                <h2 className="mt-2 text-3xl md:text-4xl">
+                  <ScrambleText text={s.title} />
+                </h2>
+              </div>
+              <p className="max-w-prose text-lg text-foreground/80 md:pt-7">{s.body}</p>
+            </section>
+          ))}
+        </div>
+
+        <section
+          id={join.id}
+          className="mt-16 scroll-mt-20 rounded-2xl bg-foreground p-8 text-background md:mt-24 md:flex md:items-end md:justify-between md:gap-12 md:p-12"
+        >
+          <div>
+            <h2 className="text-3xl md:text-5xl">
+              <ScrambleText text={join.title} glyphClassName="text-accent" />
+            </h2>
+            <p className="mt-4 max-w-prose text-lg text-background/80">{join.body}</p>
           </div>
+          <a
+            href="https://www.instagram.com/claude.tec"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-8 inline-flex shrink-0 items-center gap-2 rounded-full bg-background px-5 py-3 font-sans font-medium text-foreground transition-colors hover:bg-accent md:mt-0"
+          >
+            Escríbenos en Instagram
+            <span aria-hidden="true" className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+              ↗
+            </span>
+            <span className="sr-only"> (se abre en otra pestaña)</span>
+          </a>
+        </section>
+
+        <section id="mesa" className="mt-24 mb-32 scroll-mt-20">
+          <p className="font-sans text-sm font-medium text-accent-ink">
+            Gestión 2026–2027
+          </p>
+          <h2 className="mt-1 text-3xl font-medium md:text-4xl">
+            <ScrambleText text="Mesa directiva" />
+          </h2>
           <Image
             src="/images/team.webp"
             alt="Mesa directiva de ClaudeTec, gestión 2026–2027"
             width={2000}
             height={889}
-            priority
-            sizes="(min-width: 1024px) 480px, (min-width: 768px) 50vw, 100vw"
-            className="h-auto w-full rounded-2xl"
+            sizes="(min-width: 1024px) 976px, 100vw"
+            className="mt-8 h-auto w-full rounded-2xl"
           />
+          {/* 4 + 3 on desktop, centered so the last row never leaves a lone card */}
+          <ul className="mt-10 flex flex-wrap justify-center gap-6">
+            {board.map((m) => (
+              <li
+                key={m.slug}
+                className="flex w-full flex-col overflow-hidden rounded-2xl bg-card sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-4.5rem)/4)]"
+              >
+                <Image
+                  src={`/images/mesa/${m.slug}.webp`}
+                  alt={m.name}
+                  width={720}
+                  height={545}
+                  sizes="(min-width: 1024px) 230px, (min-width: 640px) 50vw, 100vw"
+                  className="aspect-[4/3] w-full object-cover object-top"
+                />
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="text-lg">{m.name}</h3>
+                  <p className="font-sans font-medium text-accent-ink">{m.role}</p>
+                  <p className="mt-1 text-sm text-foreground/60">{m.study}</p>
+                  {m.bio && <p className="mt-4 text-foreground/80">{m.bio}</p>}
+                  <p className="mt-4 text-foreground/80">{m.does}</p>
+                  {m.socials.length > 0 && (
+                    <ul className="mt-auto flex flex-wrap gap-x-4 pt-4 font-sans text-sm font-medium">
+                      {m.socials.map((s) => (
+                        <li key={s.href}>
+                          <a
+                            href={s.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block py-2 underline-offset-4 hover:text-accent-ink hover:underline"
+                          >
+                            {s.label}
+                            <span className="sr-only"> de {m.name} (se abre en otra pestaña)</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
         </section>
-
-        {sections.map((s) => (
-          <section
-            key={s.id}
-            id={s.id}
-            className="mb-6 scroll-mt-20 rounded-2xl bg-card p-6 md:p-8"
-          >
-            <h2 className="text-2xl font-medium text-accent-ink">{s.title}</h2>
-            <p className="mt-3 max-w-prose text-foreground/80">{s.body}</p>
-          </section>
-        ))}
       </main>
-
-      <footer className="mt-12 border-t border-foreground/15">
-        <div className="mx-auto grid max-w-5xl gap-10 px-6 py-12 md:grid-cols-[2fr_1fr_1fr]">
-          <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/brand/logo/claudetec/claudetec-fondo-claro.svg"
-              alt="ClaudeTec"
-              width={140}
-              height={21}
-              loading="lazy"
-            />
-            {/* LiFE siempre más chico que el logo de ClaudeTec */}
-            <Image
-              src="/brand/logo/life/life-fondo-claro-color.png"
-              alt="LiFE Grupos Estudiantiles"
-              width={110}
-              height={18}
-              className="mt-5"
-            />
-            <p className="mt-5 text-sm text-foreground/70">
-              *Somos un grupo estudiantil independiente del Tec de Monterrey. No
-              estamos asociados a Anthropic.
-            </p>
-            <p className="mt-2 text-sm text-foreground/70">
-              © {new Date().getFullYear()} ClaudeTec
-            </p>
-            <Spinner className="mt-4 font-mono text-sm text-accent-ink" />
-          </div>
-          <FooterLinks
-            title="Explora"
-            links={sections.map((s) => ({ label: s.title, href: `#${s.id}` }))}
-          />
-          <FooterLinks
-            title="Síguenos"
-            links={[
-              {
-                label: "Instagram",
-                href: "https://www.instagram.com/claude.tec",
-                external: true,
-              },
-            ]}
-          />
-        </div>
-        {/* Marca de agua decorativa: logo a todo el ancho, recortado desde arriba */}
-        <div
-          aria-hidden="true"
-          className="relative aspect-[10/1] w-full overflow-hidden opacity-20"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/logo/claudetec/claudetec-fondo-claro.svg"
-            alt=""
-            loading="lazy"
-            className="absolute left-0 top-0 h-auto w-full"
-          />
-        </div>
-      </footer>
     </>
   );
 }
