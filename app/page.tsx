@@ -1,81 +1,15 @@
 import Image from "next/image";
+import Link from "next/link";
 import Hero from "./hero";
+import { getMembers, study } from "./mesa/members";
 import ScrambleText from "./scramble-text";
 import { sections } from "./site";
 
 const info = sections.filter((s) => s.id !== "join");
 const join = sections.find((s) => s.id === "join")!;
 
-type Social = { label: string; href: string };
-
-// Order and copy from public/mesa-directiva/ (Portada + "Qué hace en ClaudeTec" slides).
-// bio and socials are blank until each member sends theirs; the card hides what's empty.
-const board: {
-  name: string;
-  slug: string;
-  role: string;
-  study: string;
-  does: string;
-  bio?: string;
-  socials: Social[];
-}[] = [
-  {
-    name: "Marcelo Treviño",
-    slug: "marcelo-trevino",
-    role: "Presidente",
-    study: "ITC · 5.º semestre",
-    does: "Lidera ClaudeTec este 2026–2027, con la meta de llevar la IA aplicada a todo el campus.",
-    socials: [],
-  },
-  {
-    name: "Ramses Domínguez",
-    slug: "ramses-dominguez",
-    role: "Vicepresidente",
-    study: "IID · 5.º semestre",
-    does: "Trabaja junto a presidencia para que ClaudeTec crezca y llegue a más estudiantes.",
-    socials: [],
-  },
-  {
-    name: "Renato Peña",
-    slug: "renato-pena",
-    role: "Director de Proyectos",
-    study: "ITC · 7.º semestre",
-    does: "Convierte las ideas del grupo en proyectos que sí se terminan.",
-    socials: [],
-  },
-  {
-    name: "David Valdez",
-    slug: "david-valdez",
-    role: "Director de Finanzas",
-    study: "IBT · 5.º semestre",
-    does: "Lleva los números de ClaudeTec para que cada proyecto tenga con qué hacerse realidad.",
-    socials: [],
-  },
-  {
-    name: "Andrea Valdez",
-    slug: "andrea-valdez",
-    role: "Directora de Responsabilidad Social",
-    study: "ITC · 5.º semestre",
-    does: "Se asegura de que lo que hacemos con IA tenga impacto más allá del campus.",
-    socials: [],
-  },
-  {
-    name: "André Kuo Ko",
-    slug: "andre-kuo-ko",
-    role: "Director de Comunicación",
-    study: "IDM · 3.er semestre",
-    does: "Le da voz e imagen a ClaudeTec: lo que ves aquí pasa por sus manos.",
-    socials: [],
-  },
-  {
-    name: "Daniel Medina",
-    slug: "daniel-medina",
-    role: "Director de TI",
-    study: "ITC · 5.º semestre",
-    does: "Se encarga de que todo lo técnico funcione: plataformas, herramientas y la infraestructura de cada proyecto.",
-    socials: [],
-  },
-];
+// Order and copy live in content/mesa/*.md (from the public/mesa-directiva/ slides).
+const board = getMembers();
 
 export default function Home() {
   return (
@@ -148,10 +82,10 @@ export default function Home() {
             {board.map((m) => (
               <li
                 key={m.slug}
-                className="flex w-full flex-col overflow-hidden rounded-2xl bg-card sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-4.5rem)/4)]"
+                className="group relative flex w-full flex-col overflow-hidden rounded-2xl bg-card sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-4.5rem)/4)]"
               >
                 <Image
-                  src={`/images/mesa/${m.slug}.webp`}
+                  src={m.image}
                   alt={m.name}
                   width={720}
                   height={545}
@@ -159,28 +93,18 @@ export default function Home() {
                   className="aspect-[4/3] w-full object-cover object-top"
                 />
                 <div className="flex flex-1 flex-col p-5">
-                  <h3 className="text-lg">{m.name}</h3>
+                  <h3 className="text-lg">
+                    {/* after: stretches the link over the whole card */}
+                    <Link
+                      href={`/mesa/${m.slug}`}
+                      className="underline-offset-4 after:absolute after:inset-0 group-hover:underline"
+                    >
+                      {m.name}
+                    </Link>
+                  </h3>
                   <p className="font-sans font-medium text-accent-ink">{m.role}</p>
-                  <p className="mt-1 text-sm text-foreground/60">{m.study}</p>
-                  {m.bio && <p className="mt-4 text-foreground/80">{m.bio}</p>}
-                  <p className="mt-4 text-foreground/80">{m.does}</p>
-                  {m.socials.length > 0 && (
-                    <ul className="mt-auto flex flex-wrap gap-x-4 pt-4 font-sans text-sm font-medium">
-                      {m.socials.map((s) => (
-                        <li key={s.href}>
-                          <a
-                            href={s.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block py-2 underline-offset-4 hover:text-accent-ink hover:underline"
-                          >
-                            {s.label}
-                            <span className="sr-only"> de {m.name} (se abre en otra pestaña)</span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  <p className="mt-1 text-sm text-foreground/60">{study(m)}</p>
+                  <p className="mt-4 text-foreground/80">{m.bio[0]}</p>
                 </div>
               </li>
             ))}
