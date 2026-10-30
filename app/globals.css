@@ -39,6 +39,17 @@ body {
   html {
     scroll-behavior: smooth;
   }
+
+  /* mobile menu dividers: stepping 1ch swaps each glyph pair, e.g. /\ -> \/ */
+  .ascii-march {
+    animation: ascii-march 0.8s steps(2) infinite;
+  }
+}
+
+@keyframes ascii-march {
+  to {
+    transform: translateX(-2ch);
+  }
 }
 
 h1, h2, h3 {
