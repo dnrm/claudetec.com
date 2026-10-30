@@ -6,8 +6,11 @@ semester: 5.º
 major: ITC
 image: /images/mesa/daniel-medina.webp
 interests:
-linkedin:
-website:
+ - Fotografía
+ - Programación
+ - Café de especialidad
+linkedin: https://www.linkedin.com/in/dnrm/
+website: https://dnrm.dev/
 email:
 ---
 
